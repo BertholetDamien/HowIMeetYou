@@ -1,7 +1,18 @@
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write;
+    function isAdmin() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.admin == true;
+    }
+
+    match /users/{user} {
+      allow read, write: if isAdmin();
+    }
+
+    match /stories/{story} {
+      allow read: if true;
+      allow create: if request.auth.uid != null;
+      allow update: if isAdmin() || (request.auth.uid == resource.data.author_id && request.resource.data.status == resource.data.status);
+      allow delete: if isAdmin();
     }
   }
 }
