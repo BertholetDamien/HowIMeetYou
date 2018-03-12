@@ -1,7 +1,9 @@
 <template>
   <q-page class="flex flex-center">
     <q-btn @click="logWithGoogle" label="Log with Google" />
+    <q-btn @click="logWithGithub" label="Log with Github" />
     <q-btn @click="logWithFacebook" label="Log with Facebook" />
+    <q-btn @click="logout" label="Logout" />
     <q-btn @click="deleteItem" label="Delete item" />
     <q-btn @click="addItem" label="Add item" />
     <q-btn @click="getAllItems" label="Get All items" />
@@ -17,7 +19,7 @@ export default {
   methods: {
     getAllItems() {
       const collection = this.$db.collection('stories');
-      collection.get().then((querySnapshot) => {
+      collection.where('status', '==', 'active').get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           console.log(doc.id);
           console.log(doc.data());
@@ -51,9 +53,15 @@ export default {
       this.logWith(provider);
     },
     logWithFacebook() {
-      this.$firebase.auth().signOut();
       const provider = new this.$firebase.auth.FacebookAuthProvider();
       this.logWith(provider);
+    },
+    logWithGithub() {
+      const provider = new this.$firebase.auth.GithubAuthProvider();
+      this.logWith(provider);
+    },
+    logout() {
+      this.$firebase.auth().signOut();
     },
     logWith(provider) {
       if (!this.$firebase.auth().currentUser) {
