@@ -9,7 +9,7 @@ service cloud.firestore {
     }
 
     match /stories/{story} {
-      allow read: if true;
+      allow read: if resource.data.status == 'active';
       allow create: if request.auth.uid != null;
       allow update: if isAdmin() || (request.auth.uid == resource.data.author_id && request.resource.data.status == resource.data.status);
       allow delete: if isAdmin();
