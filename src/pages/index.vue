@@ -3,6 +3,7 @@
     <q-btn @click="logWithGoogle" label="Log with Google" />
     <q-btn @click="logWithGithub" label="Log with Github" />
     <q-btn @click="logWithFacebook" label="Log with Facebook" />
+    <q-btn @click="getLogStatus" label="Log status" />
     <q-btn @click="logout" label="Logout" />
     <q-btn @click="deleteItem" label="Delete item" />
     <q-btn @click="addItem" label="Add item" />
@@ -47,6 +48,9 @@ export default {
         .catch((error) => {
           console.error('Error adding document: ', error);
         });
+    },
+    getLogStatus() {
+      console.log(this.$firebase.auth().currentUser);
     },
     logWithGoogle() {
       const provider = new this.$firebase.auth.GoogleAuthProvider();
