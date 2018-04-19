@@ -1,20 +1,21 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hhh LpR fff">
     <q-layout-header>
-      <q-toolbar color="primary" glossy>
+      <q-toolbar color="white" class="items-stretch q-pa-none">
         <q-btn
           flat
-          dense
           round
           @click="leftDrawerOpen = !leftDrawerOpen"
+          class="lt-sm"
         >
           <q-icon name="menu" />
         </q-btn>
 
-        <q-toolbar-title>
-          Quasar App
-          <div slot="subtitle">Running on Quasar v{{ $q.version }}</div>
+        <q-toolbar-title class="font-xl brand-family q-pa-none">
+          <a class="q-pl-md q-pr-lg q-py-xl" href="/">How I Met You</a>
         </q-toolbar-title>
+
+        <how-menu class="gt-xs row q-py-none"></how-menu>
       </q-toolbar>
     </q-layout-header>
 
@@ -22,33 +23,11 @@
       v-model="leftDrawerOpen"
       content-class="bg-grey-2"
     >
-      <q-list
-        no-border
-        link
-        inset-delimiter
-      >
-        <q-list-header>Essential Links</q-list-header>
-        <q-item @click.native="openURL('http://quasar-framework.org')">
-          <q-item-side icon="school" />
-          <q-item-main label="Docs" sublabel="quasar-framework.org" />
-        </q-item>
-        <q-item @click.native="openURL('https://github.com/quasarframework/')">
-          <q-item-side icon="code" />
-          <q-item-main label="GitHub" sublabel="github.com/quasarframework" />
-        </q-item>
-        <q-item @click.native="openURL('https://discord.gg/5TDhbDg')">
-          <q-item-side icon="chat" />
-          <q-item-main label="Discord Chat Channel" sublabel="https://discord.gg/5TDhbDg" />
-        </q-item>
-        <q-item @click.native="openURL('http://forum.quasar-framework.org')">
-          <q-item-side icon="record_voice_over" />
-          <q-item-main label="Forum" sublabel="forum.quasar-framework.org" />
-        </q-item>
-        <q-item @click.native="openURL('https://twitter.com/quasarframework')">
-          <q-item-side icon="rss feed" />
-          <q-item-main label="Twitter" sublabel="@quasarframework" />
-        </q-item>
-      </q-list>
+      <how-menu class="side-bar">
+        <q-list-header class="list-header font-xl brand-family">
+          How I Met You
+        </q-list-header>
+      </how-menu>
     </q-layout-drawer>
 
     <q-page-container>
@@ -58,20 +37,68 @@
 </template>
 
 <script>
-import { openURL } from 'quasar';
+import HowMenu from 'components/how-menu';
 
 export default {
   name: 'LayoutDefault',
+  components: {
+    'how-menu': HowMenu,
+  },
   data() {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop,
+      leftDrawerOpen: false,
     };
   },
   methods: {
-    openURL,
   },
 };
 </script>
 
-<style>
+<style lang="stylus">
+  @import '~variables'
+
+  .q-toolbar
+    border-bottom 6px solid $primary
+    color $dark !important
+
+    .q-toolbar-title
+      margin-bottom: -10px;
+      flex-shrink 0
+      flex-grow 0
+      flex-basis inherit
+      font-weight bold
+      color palette("Green", '900')
+      letter-spacing: -2px;
+      font-size: 3rem;
+      font-weight: bold;
+      a
+        display block
+        &:hover
+          background-color rgba(189,189,189,0.5)
+
+    .q-list
+      .q-item
+        padding-left 10px
+        padding-right 10px
+
+        .q-item-side
+          min-width inherit
+
+  .side-bar
+    padding-top: 2px;
+
+    .list-header
+      border-bottom 6px solid $primary
+      font-weight bold
+      color palette("Green", '900')
+
+    .q-item
+      padding-top 10px
+      padding-bottom 10px
+
+  .q-list
+    .q-item
+      font-size 28px
+    .q-item-side i
+      font-size 32px
 </style>

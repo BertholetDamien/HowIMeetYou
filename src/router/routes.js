@@ -1,3 +1,5 @@
+import WriteStory from 'pages/WriteStory';
+import Stories from 'pages/Stories';
 
 export default [
   {
@@ -5,6 +7,12 @@ export default [
     component: () => import('layouts/default'),
     children: [
       { path: '', component: () => import('pages/index') },
+      
+      { path: 'stories', component: Stories },
+      { path: 'histoires', component: Stories },
+
+      { path: 'write-story', component: WriteStory },
+      { path: 'ecrire-histoire', component: WriteStory },
     ],
   },
 
